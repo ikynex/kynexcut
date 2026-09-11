@@ -140,7 +140,7 @@ class TrackTrimView @JvmOverloads constructor(
                     // Dim bounds removed to prevent covering adjacent clips
                     
                     // Draw a thick border enclosing the active range when selected
-                    borderPaint.color = Color.parseColor("#FF4081")
+                    borderPaint.color = Color.parseColor("#00E5FF")
                     borderPaint.strokeWidth = 8f
                     canvas.drawRect(rectF, borderPaint)
                 } else {
@@ -258,7 +258,7 @@ class TrackTrimView @JvmOverloads constructor(
         // Draw track border
         if (!isMainVideoTrack) {
             if (isSelectedTrack) {
-                borderPaint.color = Color.parseColor("#FF4081") // Vibrant pink selection accent
+                borderPaint.color = Color.parseColor("#00E5FF") // Vibrant pink selection accent
                 borderPaint.strokeWidth = 6f
                 canvas.drawRoundRect(rectF, 12f, 12f, borderPaint)
                 
@@ -314,7 +314,7 @@ class TrackTrimView @JvmOverloads constructor(
         if (isTrimEnabled) {
             val currentHandleWidth = handleWidth * currentHandleScale
             if (isMainVideoTrack) {
-                handlePaint.color = Color.parseColor("#FF4081")
+                handlePaint.color = Color.parseColor("#00E5FF")
             } else {
                 handlePaint.color = Color.WHITE
             }

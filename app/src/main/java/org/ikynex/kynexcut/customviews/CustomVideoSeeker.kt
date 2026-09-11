@@ -14,7 +14,7 @@ import android.view.View
  * CustomVideoSeeker — redesigned to match the CapCut-style reference UI.
  *
  * Visual changes (no functional changes):
- *  • Playhead line color → #FF4081 (accent)
+ *  • Playhead line color → #00E5FF (accent)
  *  • Playhead has a teardrop / rounded-top handle at the top (like the reference)
  *  • Line is slightly thinner for a refined look
  *
