@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         binding.tabHome.setBounceClickListener {
             switchTab(0)
         }
-        
+
         binding.tabSettings.setBounceClickListener {
             switchTab(1)
         }
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         binding.tabAbout.setBounceClickListener {
             switchTab(2)
         }
-        
+
         // Setup Settings Actions
         binding.btnChangeExportFolder.setBounceClickListener {
             selectFolderLauncher.launch(null)
@@ -173,18 +173,18 @@ class MainActivity : AppCompatActivity() {
         binding.btnChangeLanguage.setBounceClickListener {
             showLanguageDialog()
         }
-        
+
         binding.btnCheckForUpdates.setBounceClickListener {
             checkForUpdates()
         }
-        
+
         binding.btnOpenSourceLicenses.setBounceClickListener {
             com.mikepenz.aboutlibraries.LibsBuilder()
                 .withActivityTitle(getString(R.string.str_open_source_licenses))
                 .withSearchEnabled(true)
                 .start(this)
         }
-        
+
         // Initialize Settings UI
         val prefs = getSharedPreferences("kynexcut_prefs", MODE_PRIVATE)
         val savedUriString = prefs.getString("export_directory_uri", null)
@@ -235,34 +235,6 @@ class MainActivity : AppCompatActivity() {
             showEncoderDialog()
         }
 
-        // Set dynamic About version tag
-        try {
-            val pInfo = packageManager.getPackageInfo(packageName, 0)
-            binding.tvAboutVersion.text = "v${pInfo.versionName}"
-        } catch (e: Exception) {
-            binding.tvAboutVersion.text = "v1.0-beta5"
-        }
-
-        // Setup GitHub and Translation button listeners
-        binding.btnStarGithub.setBounceClickListener {
-            openUrl("https://github.com/tharunbirla/KynexCut")
-        }
-        binding.btnTranslate.setBounceClickListener {
-            openUrl("https://hosted.weblate.org/engage/kynexcut/")
-        }
-        binding.btnReportBug.setBounceClickListener {
-            openUrl("https://github.com/tharunbirla/KynexCut/issues")
-        }
-        binding.btnSponsor.setBounceClickListener {
-            openUrl("https://github.com/sponsors/tharunbirla")
-        }
-
-        // Onboarding / Welcome Dialog
-        val isFirstLaunch = prefs.getBoolean("first_launch_v1", true)
-        if (isFirstLaunch) {
-            showOnboardingDialog(prefs)
-        }
-
         // Handle shared/intent videos
         handleIntent(intent)
     }
@@ -291,78 +263,77 @@ class MainActivity : AppCompatActivity() {
 
     private fun getAvailableLanguages(): List<LanguageItem> {
         val result = mutableListOf<LanguageItem>()
-        result.add(LanguageItem("", getString(R.string.str_system_default)))
-
-        val tags = mutableSetOf<String>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            try {
-                val localeConfig = android.app.LocaleConfig(this)
-                val locales = localeConfig.supportedLocales
-                if (locales != null) {
-                    for (i in 0 until locales.size()) {
-                        val locale = locales.get(i)
-                        if (locale != null) {
-                            tags.add(locale.toLanguageTag())
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("MainActivity", "LocaleConfig error", e)
-            }
+        val sysDef = getString(R.string.str_system_default)
+        val topLabel = if (sysDef.contains("System default", ignoreCase = true)) {
+            sysDef
+        } else {
+            "$sysDef (System default)"
         }
+        result.add(LanguageItem("", topLabel))
 
-        if (tags.isEmpty()) {
-            try {
-                val resId = resources.getIdentifier("_generated_res_locale_config", "xml", packageName)
-                if (resId != 0) {
-                    val parser = resources.getXml(resId)
-                    var eventType = parser.eventType
-                    while (eventType != org.xmlpull.v1.XmlPullParser.END_DOCUMENT) {
-                        if (eventType == org.xmlpull.v1.XmlPullParser.START_TAG && parser.name == "locale") {
-                            val name = parser.getAttributeValue("http://schemas.android.com/apk/res/android", "name")
-                            if (!name.isNullOrEmpty()) {
-                                tags.add(name)
-                            }
-                        }
-                        eventType = parser.next()
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("MainActivity", "XmlParser _generated_res_locale_config error", e)
-            }
-        }
-
-        if (tags.isEmpty()) {
-            tags.addAll(listOf("en", "de", "et", "sk", "pt-BR"))
-        }
-
-        val items = tags.map { tag ->
-            val locale = java.util.Locale.forLanguageTag(tag)
-            val name = when (tag.lowercase()) {
-                "pt-br" -> "Português (Brasil)"
-                "zh-cn" -> "中文 (简体)"
-                "zh-tw" -> "中文 (繁體)"
-                else -> locale.getDisplayName(locale).replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
-            }
-            LanguageItem(tag, name)
-        }.sortedBy { it.displayName.lowercase() }
-
-        result.addAll(items)
+        val langList = listOf(
+            LanguageItem("tr", "Türkçe"),
+            LanguageItem("en", "English"),
+            LanguageItem("es", "Español"),
+            LanguageItem("de", "Deutsch"),
+            LanguageItem("fr", "Français"),
+            LanguageItem("it", "Italiano"),
+            LanguageItem("pt-BR", "Português (Brasil)"),
+            LanguageItem("pt-PT", "Português (Portugal)"),
+            LanguageItem("ru", "Русский"),
+            LanguageItem("ar", "العربية"),
+            LanguageItem("hi", "हिन्दी"),
+            LanguageItem("zh-CN", "中文 (简体)"),
+            LanguageItem("zh-TW", "中文 (繁體)"),
+            LanguageItem("ja", "日本語"),
+            LanguageItem("ko", "한국어"),
+            LanguageItem("id", "Bahasa Indonesia"),
+            LanguageItem("vi", "Tiếng Việt"),
+            LanguageItem("nl", "Nederlands"),
+            LanguageItem("pl", "Polski"),
+            LanguageItem("uk", "Українська"),
+            LanguageItem("fa", "فارسی"),
+            LanguageItem("az", "Azərbaycanca"),
+            LanguageItem("sv", "Svenska"),
+            LanguageItem("no", "Norsk"),
+            LanguageItem("da", "Dansk"),
+            LanguageItem("fi", "Suomi"),
+            LanguageItem("el", "Ελληνικά"),
+            LanguageItem("cs", "Čeština"),
+            LanguageItem("sk", "Slovenčina"),
+            LanguageItem("hu", "Magyar"),
+            LanguageItem("ro", "Română"),
+            LanguageItem("he", "עברית"),
+            LanguageItem("th", "ไทย"),
+            LanguageItem("bn", "বাংলা"),
+            LanguageItem("ur", "اردو"),
+            LanguageItem("ta", "தமிழ்"),
+            LanguageItem("et", "Eesti")
+        )
+        result.addAll(langList)
         return result
     }
 
     private fun updateLanguageUI() {
         val currentLocales = AppCompatDelegate.getApplicationLocales()
+        val sysDef = getString(R.string.str_system_default)
+        val topLabel = if (sysDef.contains("System default", ignoreCase = true)) {
+            sysDef
+        } else {
+            "$sysDef (System default)"
+        }
         if (currentLocales.isEmpty) {
-            binding.tvCurrentLanguage.text = getString(R.string.str_system_default)
+            binding.tvCurrentLanguage.text = topLabel
         } else {
             val locale = currentLocales.get(0)
             val tag = locale?.toLanguageTag() ?: ""
-            val name = when (tag.lowercase()) {
-                "pt-br" -> "Português (Brasil)"
-                else -> locale?.getDisplayName(locale)?.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
+            val matched = getAvailableLanguages().find {
+                it.tag.equals(tag, ignoreCase = true) ||
+                (it.tag.length == 2 && tag.startsWith(it.tag, ignoreCase = true))
             }
-            binding.tvCurrentLanguage.text = name ?: getString(R.string.str_system_default)
+            binding.tvCurrentLanguage.text = matched?.displayName ?: locale?.getDisplayName(locale)?.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(locale) else it.toString()
+            } ?: topLabel
         }
     }
 
@@ -523,10 +494,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-
     private fun selectVideo() {
         Log.d("VideoSelection", "Launching video picker.")
         val picker = org.ikynex.kynexcut.customviews.MediaPickerBottomSheet().apply {
@@ -585,56 +552,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun showOnboardingDialog(prefs: android.content.SharedPreferences) {
-        val dialog = android.app.Dialog(this)
-        val view = layoutInflater.inflate(R.layout.dialog_welcome_onboarding, null)
-        dialog.setContentView(view)
-        dialog.setCancelable(false)
-
-        dialog.window?.let { window ->
-            // Make dialog window background transparent so our custom layout's background card and shape render perfectly
-            window.setBackgroundDrawableResource(android.R.color.transparent)
-            
-            // Set size parameters
-            val lp = window.attributes
-            lp.width = android.view.ViewGroup.LayoutParams.MATCH_PARENT
-            lp.height = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-            window.attributes = lp
-        }
-
-        // Set version dynamically
-        val tvVersion = view.findViewById<TextView>(R.id.tvOnboardingVersion)
-        try {
-            val pInfo = packageManager.getPackageInfo(packageName, 0)
-            tvVersion.text = "Version ${pInfo.versionName}"
-        } catch (e: Exception) {
-            tvVersion.text = "Version 1.0-beta4"
-        }
-
-        view.findViewById<View>(R.id.layoutStarGithub)?.setBounceClickListener {
-            openUrl("https://github.com/tharunbirla/KynexCut")
-        }
-
-        view.findViewById<View>(R.id.layoutSponsorGithub)?.setBounceClickListener {
-            openUrl("https://github.com/sponsors/tharunbirla")
-        }
-
-        view.findViewById<View>(R.id.layoutDiscord)?.setBounceClickListener {
-            openUrl("https://discord.gg/gwr3nE7YW")
-        }
-
-        view.findViewById<View>(R.id.layoutTroubleshooting)?.setBounceClickListener {
-            openUrl("https://github.com/tharunbirla/KynexCut/wiki/Error-Codes-&-Troubleshooting")
-        }
-
-        view.findViewById<View>(R.id.btnOnboardingGetStarted)?.setBounceClickListener {
-            prefs.edit().putBoolean("first_launch_v1", false).apply()
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
 
     private fun showToast(message: String) {
