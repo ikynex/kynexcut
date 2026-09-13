@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KynexCut</string>
+    <string name="str_home">Ana Sayfa</string>
+    <string name="str_settings">Ayarlar</string>
+    <string name="str_about">Hakkında</string>
+    <string name="str_general">Genel</string>
+    <string name="str_editor_rendering">Düzenleyici &amp; İşleme</string>
+    <string name="str_app_language">Uygulama Dili</string>
+    <string name="str_video_export_folder">Video Dışa Aktarma Klasörü</string>
+    <string name="str_audio_export_folder">Ses Dışa Aktarma Klasörü</string>
+    <string name="str_snapshot_export_folder">Ekran Görüntüsü Klasörü</string>
+    <string name="str_haptic_feedback">Dokunsal Titreşim</string>
+    <string name="str_haptic_enabled_desc">Etkin (Uygulama içi titreşimler açık)</string>
+    <string name="str_haptic_disabled_desc">Kapalı (Titreşim devre dışı)</string>
+    <string name="str_fullscreen_editor">Tam Ekran Düzenleyici</string>
+    <string name="str_fullscreen_enabled_desc">Etkin (Durum ve gezinme çubuğunu gizler)</string>
+    <string name="str_fullscreen_disabled_desc">Kapalı (Sistem çubukları görünür)</string>
+    <string name="str_under_construction">Yapım aşamasında</string>
+    <string name="str_system_default">Cihaz varsayılanı</string>
+    <string name="str_default_movies_kynexcut">Varsayılan (Videolar/KynexCut)</string>
+    <string name="str_default_music_kynexcut">Varsayılan (Müzik/KynexCut)</string>
+    <string name="str_default_pictures_kynexcut">Varsayılan (Resimler/KynexCut)</string>
+</resources>

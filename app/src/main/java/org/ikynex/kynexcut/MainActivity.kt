@@ -428,6 +428,7 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setApplicationLocales(appLocale)
                 updateLanguageUI()
                 dialog.dismiss()
+                recreate()
             }
 
             container?.addView(itemView)
