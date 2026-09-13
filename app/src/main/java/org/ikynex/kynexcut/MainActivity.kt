@@ -261,7 +261,7 @@ class MainActivity : AppCompatActivity() {
         val displayName: String
     )
 
-        private fun getAvailableLanguages(): List<LanguageItem> {
+    private fun getAvailableLanguages(): List<LanguageItem> {
         val result = mutableListOf<LanguageItem>()
         val sysDef = getString(R.string.str_system_default)
         result.add(LanguageItem("", sysDef))
@@ -269,7 +269,6 @@ class MainActivity : AppCompatActivity() {
         result.add(LanguageItem("en", "English"))
         return result
     }
-
     private fun updateLanguageUI() {
         val currentLocales = AppCompatDelegate.getApplicationLocales()
         val sysDef = getString(R.string.str_system_default)
