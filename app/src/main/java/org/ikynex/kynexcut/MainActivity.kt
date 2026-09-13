@@ -261,56 +261,12 @@ class MainActivity : AppCompatActivity() {
         val displayName: String
     )
 
-    private fun getAvailableLanguages(): List<LanguageItem> {
+        private fun getAvailableLanguages(): List<LanguageItem> {
         val result = mutableListOf<LanguageItem>()
         val sysDef = getString(R.string.str_system_default)
-        val topLabel = if (sysDef.contains("System default", ignoreCase = true)) {
-            sysDef
-        } else {
-            "$sysDef (System default)"
-        }
-        result.add(LanguageItem("", topLabel))
-
-        val langList = listOf(
-            LanguageItem("tr", "Türkçe"),
-            LanguageItem("en", "English"),
-            LanguageItem("es", "Español"),
-            LanguageItem("de", "Deutsch"),
-            LanguageItem("fr", "Français"),
-            LanguageItem("it", "Italiano"),
-            LanguageItem("pt-BR", "Português (Brasil)"),
-            LanguageItem("pt-PT", "Português (Portugal)"),
-            LanguageItem("ru", "Русский"),
-            LanguageItem("ar", "العربية"),
-            LanguageItem("hi", "हिन्दी"),
-            LanguageItem("zh-CN", "中文 (简体)"),
-            LanguageItem("zh-TW", "中文 (繁體)"),
-            LanguageItem("ja", "日本語"),
-            LanguageItem("ko", "한국어"),
-            LanguageItem("id", "Bahasa Indonesia"),
-            LanguageItem("vi", "Tiếng Việt"),
-            LanguageItem("nl", "Nederlands"),
-            LanguageItem("pl", "Polski"),
-            LanguageItem("uk", "Українська"),
-            LanguageItem("fa", "فارسی"),
-            LanguageItem("az", "Azərbaycanca"),
-            LanguageItem("sv", "Svenska"),
-            LanguageItem("no", "Norsk"),
-            LanguageItem("da", "Dansk"),
-            LanguageItem("fi", "Suomi"),
-            LanguageItem("el", "Ελληνικά"),
-            LanguageItem("cs", "Čeština"),
-            LanguageItem("sk", "Slovenčina"),
-            LanguageItem("hu", "Magyar"),
-            LanguageItem("ro", "Română"),
-            LanguageItem("he", "עברית"),
-            LanguageItem("th", "ไทย"),
-            LanguageItem("bn", "বাংলা"),
-            LanguageItem("ur", "اردو"),
-            LanguageItem("ta", "தமிழ்"),
-            LanguageItem("et", "Eesti")
-        )
-        result.addAll(langList)
+        result.add(LanguageItem("", sysDef))
+        result.add(LanguageItem("tr", "Türkçe"))
+        result.add(LanguageItem("en", "English"))
         return result
     }
 
