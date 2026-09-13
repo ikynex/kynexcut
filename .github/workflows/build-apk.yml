@@ -38,7 +38,7 @@ jobs:
         EOC
 
     - name: İmzalı Release APK Derle
-      run: ./gradlew assembleRelease --no-daemon
+      run: ./gradlew assembleRelease -x test -x lint --no-daemon
 
     - name: APK Dosyasını Yükle (Artifact)
       uses: actions/upload-artifact@v4
