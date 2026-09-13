@@ -561,6 +561,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkForUpdates() {
         showToast("Checking for updates in browser...")
-        openUrl("https://github.com/tharunbirla/KynexCut/releases/latest")
+        openUrl("https://github.com/ikynex/kynexcut/releases/latest")
     }
 }
